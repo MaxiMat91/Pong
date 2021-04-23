@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <title>Pong</title>
+</head>
+<body>
+  
+</body>
+
+<script src="./js/game.js"></script>
+<script src="./js/game.display.js"></script>
+<script src="./js/game.control.js"></script>
+<script src="./js/game.ai.js"></script>
+<script src="./js/game.multiplayer.js"></script>
+<script>
+    (function () {
+    var player='';
+    
+    var requestAnimId;
+    
+    var initialisation = function() {
+
+    socket.on('player', (playerNumber) => {
+        console.log(playerNumber);
+        player = playerNumber;
+    })
+    
+    game.init();
+
+    socket.on('moveP1', (P1) => {
+      game.majPlayerOne(P1);
+    });
+    socket.on('moveP3', (P3) => {
+      game.majPlayerThree(P3);
+    });
+
+      requestAnimId = window.requestAnimationFrame(main);
+    }
+    
+    var main = function() {
+      game.clearLayer(game.playersBallLayer);
+      //game.movePlayers();
+      game.initMouse(game.control.onMouseMove);
+      game.displayPlayers();
+      game.moveBall();
+      if ( game.ball.inGame ) {
+        game.lostBall();
+      }
+      game.ai.move();
+      game.collideBallWithPlayersAndAction();
+      if(player == 'player1'){
+        game.movePlayerOne();
+        socket.emit('majP1', game.playerOne);
+      }
+      if(player == 'player3'){
+        game.movePlayerThree();
+        socket.emit('majP3', game.playerThree);
+      }
+      requestAnimId = window.requestAnimationFrame(main);
+    }
+    window.onload = initialisation;
+    
+  })();
+    </script>
+
+<div id="menu"><input id="startGame" type="button" value="Start Game"></div>
+<div id="divGame"></div>
+</html>
