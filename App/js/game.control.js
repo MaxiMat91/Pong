@@ -4,16 +4,16 @@ game.keycode = {
     KEYUP : 38,
     SPACEBAR : 32
 }
-player=null
+
 game.control = {
 
     onKeyDown : function(event) {
 
-        if ( event.keyCode == game.keycode.KEYDOWN && game.playerOne.posY < game.groundHeight - game.playerOne.height ) {
+        if ( event.keyCode == game.keycode.KEYDOWN) {
             game.playerOne.goDown = true;
             game.playerThree.goDown = true;
         } 
-        else if ( event.keyCode == game.keycode.KEYUP && game.playerOne.posY > 0 ) {
+        else if ( event.keyCode == game.keycode.KEYUP) {
             game.playerOne.goUp = true;
             game.playerThree.goUp = true;
         }

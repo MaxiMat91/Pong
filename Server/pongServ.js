@@ -25,8 +25,12 @@ io.on("connection", (socket) => {
   socket.on('majP3', (P3) => {
     io.emit('moveP3', P3);
   });
-
-  console.log("Un nouveau joueur s'est connecté");
+  socket.on('majBall', (Ball) => {
+    io.emit('moveBall', Ball);
+  });
+  socket.on('majScore', (ScorePlayerOne, ScorePlayerTwo) => {
+    io.emit('moveScore', ScorePlayerOne, ScorePlayerTwo);
+  });
 
   socket.on("message", (message) => {
     io.emit("message", `${socket.id.substr(0, 2)} à dit ${message}`);
@@ -35,4 +39,4 @@ io.on("connection", (socket) => {
 });
 
 
-http.listen(3000, () => console.log("http://localhost:3000"));
+http.listen(3000, () => console.log("vous pouvez maintenant ouvrir /pong.html dans le dossier App"));

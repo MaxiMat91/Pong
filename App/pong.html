@@ -37,6 +37,12 @@
     socket.on('moveP3', (P3) => {
       game.majPlayerThree(P3);
     });
+    socket.on('moveScore', (ScorePlayerOne, ScorePlayerTwo) => {
+        game.majScore(ScorePlayerOne, ScorePlayerTwo);  
+    });
+    socket.on('moveBall', (Ball) => {
+        game.majBall(Ball);  
+    });
 
       requestAnimId = window.requestAnimationFrame(main);
     }
@@ -55,11 +61,15 @@
       if(player == 'player1'){
         game.movePlayerOne();
         socket.emit('majP1', game.playerOne);
+        //A cause de lag en jouant sur le même pc, j'ai choisi que seul le joueur 1 mettrai sa balle à jour
+        socket.emit('majBall', game.ball);
+        socket.emit('majScore', game.playerOne.score, game.playerTwo.score);
       }
       if(player == 'player3'){
         game.movePlayerThree();
         socket.emit('majP3', game.playerThree);
       }
+      
       requestAnimId = window.requestAnimationFrame(main);
     }
     window.onload = initialisation;

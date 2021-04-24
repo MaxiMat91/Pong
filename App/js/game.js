@@ -5,8 +5,8 @@ var game = {
     netWidth : 6,
     netColor: "#FFFFFF",
 
-    scorePosPlayer1 : 300,
-    scorePosPlayer2 : 365,
+    scorePosPlayer1 : 270,
+    scorePosPlayer2 : 395,
 
     wallSound : null,
     playerSound : null,
@@ -158,30 +158,46 @@ var game = {
 
     movePlayers: function () {
       if (game.playerOne.goUp) {
-        game.playerOne.posY -= 10;
+        if (game.playerOne.posY < game.groundHeight - game.playerOne.height){
+          game.playerOne.posY -= 10;
+        }
       } else if (game.playerOne.goDown) {
-        game.playerOne.posY += 10;
+        if (game.playerOne.posY > 0) {
+          game.playerOne.posY += 10;
+        }
       }
       if (game.playerThree.goUp) {
-        game.playerThree.posY -= 10;
+        if (game.playerThree.posY < game.groundHeight - game.playerThree.height){
+          game.playerThree.posY -= 10;
+        }
       } else if (game.playerThree.goDown) {
-        game.playerThree.posY += 10;
+        if (game.playerThree.posY > 0) {
+          game.playerThree.posY += 10;
+        }
       }
     },
 
     movePlayerOne: function () {
       if (game.playerOne.goUp) {
-        game.playerOne.posY -= 10;
+        if (game.playerOne.posY > 0){
+          game.playerOne.posY -= 10;
+        }
       } else if (game.playerOne.goDown) {
-        game.playerOne.posY += 10;
+        if (game.playerOne.posY < game.groundHeight - game.playerOne.height) {
+          game.playerOne.posY += 10;
+        }
       }
     },
 
     movePlayerThree: function () {
       if (game.playerThree.goUp) {
-        game.playerThree.posY -= 10;
+        if (game.playerThree.posY > 0){
+          game.playerThree.posY -= 10;
+        }
       } else if (game.playerThree.goDown) {
-        game.playerThree.posY += 10;
+        if (game.playerThree.posY < game.groundHeight - game.playerThree.height) {
+          game.playerThree.posY += 10;
+        }
       }
     },
 
@@ -247,19 +263,28 @@ var game = {
     },
 
     majPlayerOne : function(P1) {
-      this.playerOne.posX = P1.posX,
       this.playerOne.posY = P1.posY
     },
     /*majPlayerTwo : function(P2) {
-      this.playerTwo.posX = P2.posX,
       this.playerTwo.posY = P2.posY
     },*/
     majPlayerThree : function(P3) {
-      this.playerThree.posX = P3.posX,
       this.playerThree.posY = P3.posY
     },
     /*majPlayerFour : function(P4) {
-      this.playerFour.posX = P4.posX,
       this.playerFour.posY = P4.posY
     }*/
+
+    majBall : function(Ball) {
+      this.ball.posX = Ball.posX;
+      this.ball.posY = Ball.posY;
+      this.ball.directionX = Ball.directionX;
+      this.ball.directionY = Ball.directionY;
+      this.ball.inGame = Ball.inGame;
+     },
+
+     majScore : function(PlayerOneScore, PlayerTwoScore) {
+      this.playerOne.score= PlayerOneScore;
+      this.playerTwo.score= PlayerTwoScore;
+     },
 };
